@@ -7,7 +7,22 @@
 
     <div id="content">
         <h1>This is login page</h1>
+
+
+        <!-- Message for successfull regestration -->
+        <div th:if="${session.messageSuccess}">
+            <div  class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <span class="font-medium" th:text="${session.messageSuccess}" ></span> 
+            </div>
+         <th:block th:text="${@sessionRemove.removeSession()}" ></th:block>
+        </div>
+
+        
+        
     </div>
+
+
+    
     
 </body>
 </html>

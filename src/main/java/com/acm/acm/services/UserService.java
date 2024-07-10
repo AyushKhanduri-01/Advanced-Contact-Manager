@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.acm.acm.entity.User;
 
 public interface UserService {
-    User saveUser(User user);
+    Optional<User> saveUser(User user);
 
     Optional<User> getUserById(int userId);
 

@@ -20,8 +20,15 @@ public class UserServiceImpliment implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public User saveUser(User user) {
-       return userRepository.save(user);
+    public Optional<User> saveUser(User user) {
+
+        try{
+            User tempUser = userRepository.save(user);
+            return Optional.of(tempUser);
+        }
+        catch(Exception e){
+            return Optional.empty();
+        }      
        
     }
 
