@@ -1,14 +1,15 @@
 package com.acm.acm.configuration;
 
-import java.beans.Customizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,6 +21,9 @@ public class SecurityConfiguration {
 
 @Autowired
  private UserSequrityService userSequrityService;
+
+ @Autowired
+ private OAuthAuthenticationSuccessHandler oAuthAuthenticationSuccessHandler;
 
  @Bean
  public AuthenticationProvider authenticationProvider(){
@@ -42,8 +46,34 @@ public class SecurityConfiguration {
               
         });    
 
-        http.formLogin(org.springframework.security.config.Customizer.withDefaults());
+        http.formLogin(formLogin->{
+          formLogin.loginPage("/login");
+          formLogin.loginProcessingUrl("/authenticate");           
+          formLogin.successForwardUrl("/user/dashboard");
+          formLogin.failureForwardUrl("/home");
+          formLogin.usernameParameter("email");
+          formLogin.passwordParameter("password");
+          
 
+          
+        });
+       
+      
+
+
+        http.oauth2Login(loginForm -> {
+          loginForm.loginPage("/login");
+          loginForm.successHandler(oAuthAuthenticationSuccessHandler);
+          
+
+        });
+
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.logout(logoutForm ->{
+          logoutForm.logoutUrl("/logout");
+          logoutForm.logoutSuccessUrl("/login");
+
+        });
         // ... other configurations
         return http.build();
     }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
 //for dashboard
-@RequestMapping(value = "/dashboard", method=RequestMethod.GET)
+@RequestMapping(value = "/dashboard", method=RequestMethod.POST)
 public String userDashboard(Model model) {
     
     return "userData/dashboard";

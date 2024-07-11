@@ -46,7 +46,7 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String phoneNumber;
-    private boolean enabled = false;
+    private boolean enabled = true;
     private boolean emailVarified = false;
     private boolean phoneVarified = false;
 
