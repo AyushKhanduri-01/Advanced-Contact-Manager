@@ -6,6 +6,7 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.acm.acm.entity.User;
@@ -19,10 +20,18 @@ public class UserServiceImpliment implements UserService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Optional<User> saveUser(User user) {
 
+     
+
         try{
+           user.setPassword(passwordEncoder.encode(user.getPassword()));
+           
+           user.setRoleList(List.of("USER"));
             User tempUser = userRepository.save(user);
             return Optional.of(tempUser);
         }

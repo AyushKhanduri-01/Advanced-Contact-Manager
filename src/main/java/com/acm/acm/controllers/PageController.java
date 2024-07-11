@@ -27,6 +27,12 @@ public class PageController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("")
+    public String entry(){
+        System.out.println("working");
+        return "redirect:/home";
+    }
+
     @RequestMapping("/home")
     public String home(Model model){
         System.out.println("working");
