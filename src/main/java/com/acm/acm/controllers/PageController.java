@@ -35,7 +35,7 @@ public class PageController {
 
     @RequestMapping("/home")
     public String home(Model model){
-        System.out.println("working");
+        //System.out.println("working");
         return "home";
     }
 

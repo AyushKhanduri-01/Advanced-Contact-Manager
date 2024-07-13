@@ -2,13 +2,9 @@ package com.acm.acm.configuration;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-
-import javax.swing.text.Style;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
