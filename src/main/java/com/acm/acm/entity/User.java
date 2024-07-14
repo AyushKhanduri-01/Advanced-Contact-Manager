@@ -53,7 +53,7 @@ public class User implements UserDetails {
     private boolean phoneVarified = false;
 
     // Mapping to contact table.
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "adminUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Contact> contact = new ArrayList<>();
 
 
