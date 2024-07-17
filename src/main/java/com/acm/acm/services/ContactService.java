@@ -13,9 +13,11 @@ public interface ContactService {
 
  void deleteContact(Contact contact);
 
+ void deleteContactById(int id);
+
  Contact updateContact(Contact contact);
 
- List<Contact> getAllContact();
+ List<Contact> getAllContact(int id);
 
   Contact getById(int id);
 

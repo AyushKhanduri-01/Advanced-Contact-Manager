@@ -17,6 +17,7 @@ import lombok.Setter;
 
 public class ContactForm {
 
+    private int contactId;
     private String name;
     private String email;
     private String phoneNumber;

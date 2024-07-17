@@ -29,9 +29,13 @@
 
                         </p>
 
-                        <form class="mt-8" th:action="@{'/user/addContactData'}" data-th-object="${contactForm}"
+                        <form class="mt-8" th:action="@{/user/addContactData/{contactId}(contactId=*{contactId})}" data-th-object="${contactForm}"
                             method="POST" enctype="multipart/form-data">
                             <!-- name form -->
+                             
+                           
+                             <!-- <input type="number" th:field="*{contactId}"> -->
+
                             <div class="mb-3">
                                 <label for="input-group-1"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
@@ -147,6 +151,8 @@
                                   data-th-field="*{pictureFile}"
                                   type="file"
                                 />
+                            
+                            </div>
               
 
                             <!-- favorite checkbox -->

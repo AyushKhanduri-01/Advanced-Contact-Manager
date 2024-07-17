@@ -3,6 +3,7 @@ package com.acm.acm.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.acm.acm.entity.Contact;
 import com.acm.acm.entity.User;
 
 public interface UserService {
@@ -19,6 +20,8 @@ public interface UserService {
     boolean isUserExistByEmail(String email);
 
     List<User> getAllUsers();
+
+    List<Contact> getContactList(int id);
 
     User getUserByEmail(String email);
 

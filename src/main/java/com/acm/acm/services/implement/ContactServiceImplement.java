@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.acm.acm.entity.Contact;
 import com.acm.acm.repositories.ContactRepository;
 import com.acm.acm.services.ContactService;
+import com.acm.acm.services.UserService;
 
 
 @Service
@@ -17,6 +18,8 @@ public class ContactServiceImplement implements ContactService{
     @Autowired
     private ContactRepository contactRepository;
 
+    @Autowired
+    private UserService userService;
 
     @Override
     public Optional<Contact> saveContact(Contact contact) {
@@ -60,9 +63,9 @@ public class ContactServiceImplement implements ContactService{
 
 
     @Override
-    public List<Contact> getAllContact() {
-        return contactRepository.findAll();
-        
+    public List<Contact> getAllContact(int id) {
+       
+        return userService.getContactList(id);
     }
 
 
@@ -77,6 +80,12 @@ public class ContactServiceImplement implements ContactService{
     @Override
     public List<Contact> search(String name, String email, String phoneNumber) {
         return null;
+    }
+
+
+    @Override
+    public void deleteContactById(int id) {
+       contactRepository.deleteById(id);
     }
 
     

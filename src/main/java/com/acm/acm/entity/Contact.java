@@ -1,5 +1,6 @@
 package com.acm.acm.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,11 +24,13 @@ public class Contact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int contactId;
+    private int contactId=-1;
     private String name;
     private String email;
     private String phoneNumber;
     private String address;
+
+    @Column(length = 1000)
     private String picture;
     private String description;
     private boolean favorite= false;

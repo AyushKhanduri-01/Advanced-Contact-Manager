@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.acm.acm.entity.Contact;
 import com.acm.acm.entity.User;
 import com.acm.acm.helper.UserException;
 import com.acm.acm.repositories.UserRepository;
@@ -113,6 +114,19 @@ public class UserServiceImpliment implements UserService{
     
     }
 
+    @Override
+    public List<Contact> getContactList(int id) {
+       User user = userRepository.findById(id).orElse(null);
+       if(user != null){
+        return user.getContact();
+       }
+       else{
+        throw new UserException("User not found with provided information ");
+        }
+    }
+
+
+    
     
 
 }

@@ -8,13 +8,15 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
+    
+
 </head>
 
 <body>
     <div th:replace="userData/userNavbar :: userNavbar">
 
     </div>
-    <h1>This is User base page</h1>
+    
 
 
     <div th:replace = "${content}"></div>

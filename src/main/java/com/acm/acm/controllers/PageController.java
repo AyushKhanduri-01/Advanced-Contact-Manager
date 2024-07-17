@@ -39,15 +39,15 @@ public class PageController {
         return "home";
     }
 
-    @RequestMapping("/about")
-    public String about(Model model) {
-       return "about";
-    }
+    // @RequestMapping("/about")
+    // public String about(Model model) {
+    //    return "about";
+    // }
 
-    @RequestMapping("/service")   
-    public String service(Model model) {
-        return "services";
-    }
+    // @RequestMapping("/service")   
+    // public String service(Model model) {
+    //     return "services";
+    // }
 
     @RequestMapping("/login")   
     public String login(Model model) {
