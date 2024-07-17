@@ -1,5 +1,7 @@
 package com.acm.acm.forms;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,4 +23,5 @@ public class RegisterForm {
   private String password;
   private String phoneNumber;
   private String about;
+  private MultipartFile pictureFile;
 }

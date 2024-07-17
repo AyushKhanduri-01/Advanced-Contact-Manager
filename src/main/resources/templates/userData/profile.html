@@ -7,56 +7,33 @@
 
 <body>
 
-    <div id="content" class="pl-64 ">
+    <div id="content" class="pl-64 " th:o>
         <div th:replace="~{userData/sidebar :: sidebar}"></div>
 
 
 
         <div
-            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex justify-end px-4 pt-4">
-                <button id="dropdownButton" data-dropdown-toggle="dropdown"
-                    class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
-                    type="button">
-                    <span class="sr-only">Open dropdown</span>
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 16 3">
-                        <path
-                            d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                    </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div id="dropdown"
-                    class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2" aria-labelledby="dropdownButton">
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export
-                                Data</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            class="w-full border border-gray-200 rounded-lg shadow dark:bg-gray-800 bg-white  dark:border-gray-700">
+            <!-- border border-gray-200 rounded-lg shadow dark:bg-gray-800 -->
+           <br>
+           <br>
             <div class="flex flex-col items-center pb-10">
-                <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg"
+                <img class="w-44 h-44  mb-3 rounded-full shadow-lg" src="data:image/png;base64,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"
                     alt="Bonnie image" />
-                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Bonnie Green</h5>
-                <span class="text-sm text-gray-500 dark:text-gray-400">Visual Designer</span>
-                <div class="flex mt-4 md:mt-6">
-                    <a href="#"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
-                        friend</a>
-                    <a href="#"
-                        class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Message</a>
-                </div>
+                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white" th:text="*{user.name}">Name</h5>
+                <span class="text-m text-gray-500 dark:text-gray-400" th:text="*{user.email}">email</span>
+                  
+                    
+                    <span class="text-m text-gray-500 dark:text-gray-400" th:text="*{user.phoneNumber}">phone number</span>
+                    <br> <span class="text-m text-gray-500 dark:text-gray-400" th:text="*{user.about}">about</span>
+               
+
+                    <div class="flex mt-4 md:mt-6">
+                        <a th:href="@{/user/editProfile}" class="inline-flex items-center px-6 py-2 w-32 text-m font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit Profile</a>
+                        <a href="#" class="inline-flex items-center px-4 py-2 w-30 ml-3 text-m font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Delete Account</a>
+                    </div>
+
+
             </div>
         </div>
 

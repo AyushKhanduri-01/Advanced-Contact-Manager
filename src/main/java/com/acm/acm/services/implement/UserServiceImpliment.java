@@ -27,16 +27,18 @@ public class UserServiceImpliment implements UserService{
     @Override
     public Optional<User> saveUser(User user) {
 
-     
+        System.out.println("Reacted to saveUser function");
 
         try{
            user.setPassword(passwordEncoder.encode(user.getPassword()));
-           
-           user.setRoleList(List.of("USER"));
+           System.out.println("no error in to saveUser function");
+           //user.setRoleList(List.of("USER"));
             User tempUser = userRepository.save(user);
+            System.out.println("no error in to User Repositoty saveUser function");
             return Optional.of(tempUser);
         }
         catch(Exception e){
+          e.printStackTrace();
             return Optional.empty();
         }      
        
@@ -124,6 +126,8 @@ public class UserServiceImpliment implements UserService{
         throw new UserException("User not found with provided information ");
         }
     }
+
+   
 
 
     

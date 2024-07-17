@@ -45,7 +45,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
             user.setAbout("Login by google.");
             user.setPassword(email);
             user.setProfilePic(picture);
-            user.setRoleList(List.of("USER"));
+          //  user.setRoleList(List.of("USER"));
 
 
 

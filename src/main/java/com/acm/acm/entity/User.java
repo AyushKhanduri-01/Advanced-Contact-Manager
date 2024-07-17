@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -44,6 +46,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String about;
+    @Column(length = 1000)
     private String profilePic;
 
     @Column(unique = true)
@@ -52,25 +55,30 @@ public class User implements UserDetails {
     private boolean emailVarified = false;
     private boolean phoneVarified = false;
 
-    // Mapping to contact table.
+    //Mapping to contact table.
     @OneToMany(mappedBy = "adminUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Contact> contact = new ArrayList<>();
 
+    // @ElementCollection(fetch = FetchType.EAGER)
+    // @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    // @Column(name = "role")
+    // private List<String> roleList = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roleList = new ArrayList<>();
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-       
-        List<GrantedAuthority> roles = roleList.stream()
-                        .map(role -> new SimpleGrantedAuthority(role.trim()))
-                        .collect(Collectors.toList());
-        return roles;
-    }
+    // @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    //     return roleList.stream()
+    //             .map(SimpleGrantedAuthority::new)
+    //             .collect(Collectors.toList());
+    // }
 
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+       return null;
     }
 
 }
