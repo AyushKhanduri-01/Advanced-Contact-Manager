@@ -83,15 +83,11 @@
                             Action
                         </th>
 
-                    </tr>
-                   
-                </thead>
-                    
-                <tbody>
-                   
+                    </tr>                  
+                </thead>                   
+                <tbody>                  
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         th:object="${contact}" th:each="contact : ${contactList}">
-
                         <th scope="row"
                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                             <img onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
@@ -110,13 +106,10 @@
                         </td>
                         <td class="px-6 py-4">
                             <a th:href="@{*{link}}" th:text="*{link}">https://www.google.com/maps/place/Rishikesh</a>
-
                         </td>
                         <td class="px-6 py-4" th:text="*{description}">
                             This is Description about the Contact
-                        </td>
-                        
-                       
+                        </td>                      
                         <td class="px-6 py-4  bg-blue-300">
 
                             <a th:href="@{/user/contact/changeFav/{contactId}(contactId=*{contactId})}"
@@ -144,7 +137,6 @@
                                         d="M19 0H1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1ZM2 6v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6H2Zm11 3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8a1 1 0 0 1 2 0h2a1 1 0 0 1 2 0v1Z" />
                                 </svg>
                             </a>
-
                             <a th:href="@{/user/contact/update/{contactId}(contactId=*{contactId})}"
                                 class="button-link inline-block mr-4">
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -153,13 +145,7 @@
                                         stroke-width="2"
                                         d="M5 1v3m5-3v3m5-3v3M1 7h7m1.506 3.429 2.065 2.065M19 7h-2M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm6 13H6v-2l5.227-5.292a1.46 1.46 0 0 1 2.065 2.065L8 16Z" />
                                 </svg>
-
                             </a>
-
-
-
-
-
                         </td>
                     </tr>
                 </tbody>

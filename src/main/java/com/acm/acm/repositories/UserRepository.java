@@ -11,7 +11,7 @@ import com.acm.acm.entity.User;
 public interface UserRepository  extends JpaRepository<User,Integer> {
 
     //can add custom query 
-    //springboot automatically implement funtion.--> method must be in this formater--> findBy<Filedname> 
+    //!springboot automatically implement funtion.--> method must be in this formater--> findBy<Filedname> 
     Optional<User>findByEmail(String email);
     Optional<User>findByEmailAndPassword(String email, String password);
 

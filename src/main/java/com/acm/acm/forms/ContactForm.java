@@ -1,8 +1,6 @@
 package com.acm.acm.forms;
 
-import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
 import org.springframework.web.multipart.MultipartFile;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
+//! Used to get value from AddContactform (we send obj of this pojo to form --> form will return obj of this pojo with updated / input value)
 public class ContactForm {
 
     private int contactId;

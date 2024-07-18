@@ -31,7 +31,7 @@ public class Contact {
     private String address;
 
     @Column(length = 1000)
-    private String picture;
+    private String picture; //! Image will be stored in S3 and this feild contain url of that image
     private String description;
     private boolean favorite= false;
     private String link;
