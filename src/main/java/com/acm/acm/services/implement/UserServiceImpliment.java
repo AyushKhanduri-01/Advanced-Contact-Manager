@@ -30,7 +30,16 @@ public class UserServiceImpliment implements UserService{
         System.out.println("Reacted to saveUser function");
 
         try{
-           user.setPassword(passwordEncoder.encode(user.getPassword()));
+          if(user.getPassword().length() < 30){
+            System.out.println(user.getPassword());
+            System.out.println("Add new Password".equals(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            System.out.println("password updated");
+          }
+          else{
+            System.out.println("password not updated");
+          }
+          
            System.out.println("no error in to saveUser function");
            //user.setRoleList(List.of("USER"));
             User tempUser = userRepository.save(user);

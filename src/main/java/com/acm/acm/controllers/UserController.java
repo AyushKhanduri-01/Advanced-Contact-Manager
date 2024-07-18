@@ -71,7 +71,7 @@ public class UserController {
     userData.setEmail(user.getEmail());
     userData.setPhoneNumber(user.getPhoneNumber());
     userData.setAbout(user.getAbout());
-    userData.setPassword("null");
+    userData.setPassword("Add new Password");
     userData.setPictureFile(null);
    
     model.addAttribute("user", user);
@@ -92,8 +92,13 @@ public class UserController {
     user.setAbout(userData.getAbout());
     user.setPhoneNumber(userData.getPhoneNumber());
 
-    if(!"null".equals(userData.getPassword())){
+    if(userData.getPassword() != null && !userData.getPassword().isEmpty() && !userData.getPassword().equals("Add new Password")){
+      System.out.println("password changed" + userData.getPassword());
       user.setPassword(userData.getPassword());
+    }
+    else{
+      System.out.println("password not changed" + userData.getPassword()); 
+
     }
 
     String image = awsService.uploadImage(userData.getPictureFile());
@@ -105,21 +110,28 @@ public class UserController {
     Optional<User> tempUser2 =  userService.saveUser(user);
     if(tempUser2.isPresent()){
       System.out.println("user saved");
-      //session.setAttribute("messageSuccess","User Regestered succesfully");
-     // return "redirect:/login";        
+      return "redirect:/user/profile";        
     }
     else{
       System.out.println("user not saved");
       // session.setAttribute("messageFail","User Regestered Failed! Try again");
-      // return "redirect:/signup";
+      return "redirect:/user/profile"; 
     }
       
 
 
-      return " ";
+      
    }
 
 
+
+
+   //Delete user
+@RequestMapping(value = "/deleteUser/{userId}")
+ private String deleteUser(@PathVariable int userId){
+   userService.deleteUser(userId);
+   return "redirect:/login";
+}
 
 
 
@@ -197,7 +209,7 @@ public class UserController {
             Optional<Contact> contact2 = contactService.saveContact(currContact);
    
             if (contact2.isPresent()) {
-               return "userData/dashboard";
+               return "userData/contacts";
             } else {
                return "userData/addContact";
             }

@@ -12,34 +12,56 @@
         <div th:replace="~{userData/sidebar :: sidebar}"></div>
 
 
-            
+
         <!-- Starting of Table  -->
 
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <div
-                class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
-                
-                   
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg " style="min-height: 300px;">
 
+            
+            <form th:action="@{/user/contact/search}" method="get">
+            <div class="flex items-center space-x-3 flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+                <div>
+                        <select
+                        name="searchType"
+                        id="countries_disabled"
+                        class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                      >
+                        <option selected value="">Search By</option>
+                        <option value="name">Name</option>
+                        <option value="phone">Phone</option>
+                        <option value="email">Email</option>
+                      </select>
+
+                </div>
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" id="table-search-users"
-                        class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for users">
+                    <input type="text"
+                     id="table-search-users"
+                     name="searchValue"
+                    class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users">
                 </div>
+                <button type="submit">Search</button>
+                <a th:href="@{/user/allContacts}">All Contacts</a>
             </div>
+        </form>
 
 
+    <!-- User not found error -->
+        <div 
+        th:if="${contactList.size() == 0}"
+        class="p-4 mb-4 text-xl text-red-800  rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="font-medium"></span> No Contact found
+          </div>
 
 
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right  text-gray-500 dark:text-gray-400 "
+            th:if="${contactList.size() != 0}"
+            >
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr class=" bg-blue-300">
                         <th scope="col" class="px-6 py-3 " style="padding-left: 30px;">
@@ -50,7 +72,7 @@
                         </th>
                         <th scope="col" class="px-6 py-3 ">
                             Address
-                        </th >
+                        </th>
                         <th scope="col" class="px-6 py-3 ">
                             Link
                         </th>
@@ -62,79 +84,90 @@
                         </th>
 
                     </tr>
+                   
                 </thead>
-
+                    
                 <tbody>
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        th:object="${contact}"
-                        th:each="contact : ${contactList}"
+                   
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        th:object="${contact}" th:each="contact : ${contactList}">
 
-                        >
-                        
                         <th scope="row"
                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img 
-                            onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
-                            class="w-10 h-10 rounded-full" 
-                            th:src="@{*{picture}}" 
-                            alt="Image"
-                                >
+                            <img onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
+                                class="w-10 h-10 rounded-full" th:src="@{*{picture}}" alt="Image">
                             <div class="ps-3">
                                 <div class="text-base font-semibold" th:text="*{name}">Name</div>
                                 <div class="font-normal text-gray-500" th:text="*{email}">email</div>
                             </div>
                         </th>
                         <td class="px-6 py-4" th:text="*{phoneNumber}">
-                            
+
                             7656787654
                         </td>
                         <td class="px-6 py-4" th:text="*{address}">
-                           Rishikesh 
+                            Rishikesh
                         </td>
                         <td class="px-6 py-4">
                             <a th:href="@{*{link}}" th:text="*{link}">https://www.google.com/maps/place/Rishikesh</a>
-                            
+
                         </td>
                         <td class="px-6 py-4" th:text="*{description}">
                             This is Description about the Contact
-                         </td>
+                        </td>
+                        
+                       
+                        <td class="px-6 py-4  bg-blue-300">
 
-                         <td class="px-6 py-4  bg-blue-300" >
-                            
-                            <a th:href="@{/user/contact/changeFav/{contactId}(contactId=*{contactId})}" class="button-link inline-block mr-4  hover:dark:bg-blue-700" style="margin-right: 20px;">
-                                <svg th:if="*{favorite}" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
-                                    <path d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z"/>
+                            <a th:href="@{/user/contact/changeFav/{contactId}(contactId=*{contactId})}"
+                                class="button-link inline-block mr-4  hover:dark:bg-blue-700"
+                                style="margin-right: 20px;">
+                                <svg th:if="*{favorite}" class="w-6 h-6 text-gray-800 dark:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    viewBox="0 0 14 20">
+                                    <path
+                                        d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
                                 </svg>
-                                <svg th:unless="*{favorite}" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"/>
+                                <svg th:unless="*{favorite}" class="w-6 h-6 text-gray-800 dark:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z" />
                                 </svg>
                             </a>
 
-                            <a th:href="@{/user/contact/delete/{contactId}(contactId=*{contactId})}" class="button-link inline-block mr-4" style="margin-right: 20px;">
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                    <path d="M19 0H1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1ZM2 6v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6H2Zm11 3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8a1 1 0 0 1 2 0h2a1 1 0 0 1 2 0v1Z"/>
+                            <a th:href="@{/user/contact/delete/{contactId}(contactId=*{contactId})}"
+                                class="button-link inline-block mr-4" style="margin-right: 20px;">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                    <path
+                                        d="M19 0H1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1ZM2 6v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6H2Zm11 3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8a1 1 0 0 1 2 0h2a1 1 0 0 1 2 0v1Z" />
                                 </svg>
                             </a>
 
-                            <a th:href="@{/user/contact/update/{contactId}(contactId=*{contactId})}" class="button-link inline-block mr-4">
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v3m5-3v3m5-3v3M1 7h7m1.506 3.429 2.065 2.065M19 7h-2M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm6 13H6v-2l5.227-5.292a1.46 1.46 0 0 1 2.065 2.065L8 16Z"/>
+                            <a th:href="@{/user/contact/update/{contactId}(contactId=*{contactId})}"
+                                class="button-link inline-block mr-4">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 1v3m5-3v3m5-3v3M1 7h7m1.506 3.429 2.065 2.065M19 7h-2M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm6 13H6v-2l5.227-5.292a1.46 1.46 0 0 1 2.065 2.065L8 16Z" />
                                 </svg>
-                                
+
                             </a>
 
-                            
 
 
-                                    
-                         </td>
+
+
+                        </td>
                     </tr>
                 </tbody>
+               
             </table>
 
         </div>
-   
+
 </body>
 
 </html>

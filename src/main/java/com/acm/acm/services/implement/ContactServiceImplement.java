@@ -88,6 +88,29 @@ public class ContactServiceImplement implements ContactService{
        contactRepository.deleteById(id);
     }
 
+
+    @Override
+    public List<Contact> getUserByName(String searchValue) {
+        System.out.println("inside by name " + searchValue);
+        return contactRepository.findByNameContaining(searchValue);
+    }
+
+
+    @Override
+    public List<Contact> getUserByPhone(String searchValue) {
+        System.out.println("inside by phone "  + searchValue);
+         List <Contact> list = contactRepository.findByPhoneNumberContaining(searchValue);
+         System.out.println(list.size());
+         return list;
+    }
+
+
+    @Override
+    public List<Contact> getUserByEmail(String searchValue) {
+        System.out.println("inside by email "  + searchValue );
+       return contactRepository.findByEmailContaining(searchValue);
+    }
+
     
   
 }
