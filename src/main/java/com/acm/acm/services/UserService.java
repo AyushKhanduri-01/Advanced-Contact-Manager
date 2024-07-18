@@ -7,6 +7,7 @@ import com.acm.acm.entity.Contact;
 import com.acm.acm.entity.User;
 
 public interface UserService {
+    //! Optional will return User if present otherwise return null ( it prevent fron nullPointerException)
     Optional<User> saveUser(User user);
 
     Optional<User> getUserById(int userId);
@@ -26,6 +27,4 @@ public interface UserService {
     User getUserByEmail(String email);
 
     
-
-    // add more methods here related user service[logic]
 }

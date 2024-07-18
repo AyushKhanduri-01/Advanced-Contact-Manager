@@ -2,13 +2,9 @@ package com.acm.acm.services.implement;
 
 import java.util.List;
 import java.util.Optional;
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.acm.acm.entity.Contact;
 import com.acm.acm.entity.User;
 import com.acm.acm.helper.UserException;
@@ -24,33 +20,22 @@ public class UserServiceImpliment implements UserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
     @Override
     public Optional<User> saveUser(User user) {
-
-        System.out.println("Reacted to saveUser function");
-
         try{
+          //! prevent for again encoding of previous encoded password in update profile operation
           if(user.getPassword().length() < 30){
-            System.out.println(user.getPassword());
-            System.out.println("Add new Password".equals(user.getPassword()));
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            System.out.println("password updated");
           }
-          else{
-            System.out.println("password not updated");
-          }
-          
-           System.out.println("no error in to saveUser function");
-           //user.setRoleList(List.of("USER"));
             User tempUser = userRepository.save(user);
-            System.out.println("no error in to User Repositoty saveUser function");
             return Optional.of(tempUser);
         }
         catch(Exception e){
           e.printStackTrace();
             return Optional.empty();
-        }      
-       
+        }          
     }
 
     @Override
@@ -84,17 +69,9 @@ public class UserServiceImpliment implements UserService{
 
     @Override
     public void deleteUser(int id) {
-      /* 
-        Optional<User> temUser  = userRepository.findById(id);
-       if(temUser.isPresent()){
-         userRepository.delete(temUser.get());
-       }      
-       else{
-        throw new UserException("User not found");
-       } 
-       */
+    
      User tempUser = userRepository.findById(id)
-     .orElseThrow(() -> new UserException("User not found with provided information "));
+                     .orElseThrow(() -> new UserException("User not found with provided information "));
        userRepository.delete(tempUser);
 
     }
@@ -136,10 +113,6 @@ public class UserServiceImpliment implements UserService{
         }
     }
 
-   
-
-
-    
-    
+  
 
 }

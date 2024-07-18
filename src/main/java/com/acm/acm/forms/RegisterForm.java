@@ -15,9 +15,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RegisterForm {
-  
 
+//! user to fetch value from signup form
+public class RegisterForm {
+ 
   private String name;
   private String email;
   private String password;

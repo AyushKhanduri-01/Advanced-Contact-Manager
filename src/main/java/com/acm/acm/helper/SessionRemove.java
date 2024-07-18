@@ -6,6 +6,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.servlet.http.HttpSession;
 
+
+//! user to delete one time use session value. (Used in login and registration page)
 @Component
 public class SessionRemove {
     public  static void removeSession(){

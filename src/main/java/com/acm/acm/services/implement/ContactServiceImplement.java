@@ -2,10 +2,8 @@ package com.acm.acm.services.implement;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.acm.acm.entity.Contact;
 import com.acm.acm.repositories.ContactRepository;
 import com.acm.acm.services.ContactService;
@@ -22,17 +20,14 @@ public class ContactServiceImplement implements ContactService{
     private UserService userService;
 
     @Override
-    public Optional<Contact> saveContact(Contact contact) {
-        
+    public Optional<Contact> saveContact(Contact contact) {        
       Contact contact2 = contactRepository.save(contact);
-      return Optional.of(contact2);
-           
+      return Optional.of(contact2);          
     }
 
 
     @Override
-    public void deleteContact(Contact contact) {
-       
+    public void deleteContact(Contact contact) {      
          contactRepository.delete(contact);     
     }
 
@@ -63,17 +58,14 @@ public class ContactServiceImplement implements ContactService{
 
 
     @Override
-    public List<Contact> getAllContact(int id) {
-       
+    public List<Contact> getAllContact(int id) {      
         return userService.getContactList(id);
     }
 
 
     @Override
     public Contact getById(int id) {
-        
-        return contactRepository.findById(id).orElse(null);
-        
+            return contactRepository.findById(id).orElse(null);      
     }
 
 
@@ -91,26 +83,19 @@ public class ContactServiceImplement implements ContactService{
 
     @Override
     public List<Contact> getUserByName(String searchValue) {
-        System.out.println("inside by name " + searchValue);
         return contactRepository.findByNameContaining(searchValue);
     }
 
 
     @Override
     public List<Contact> getUserByPhone(String searchValue) {
-        System.out.println("inside by phone "  + searchValue);
-         List <Contact> list = contactRepository.findByPhoneNumberContaining(searchValue);
-         System.out.println(list.size());
-         return list;
-    }
+         return contactRepository.findByPhoneNumberContaining(searchValue);
 
+    }
 
     @Override
     public List<Contact> getUserByEmail(String searchValue) {
-        System.out.println("inside by email "  + searchValue );
        return contactRepository.findByEmailContaining(searchValue);
     }
 
-    
-  
 }

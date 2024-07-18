@@ -2,17 +2,14 @@ package com.acm.acm.controllers;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.acm.acm.entity.Contact;
 import com.acm.acm.entity.User;
 import com.acm.acm.forms.ContactForm;
@@ -21,8 +18,10 @@ import com.acm.acm.helper.GetLoggedInUser;
 import com.acm.acm.services.ContactService;
 import com.acm.acm.services.ImageAWSService;
 import com.acm.acm.services.UserService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
+//! Manage all end points related to user
 @RequestMapping("/user")
 public class UserController {
 
@@ -38,16 +37,17 @@ public class UserController {
    private ImageAWSService awsService;
 
 
+    @Autowired
+    private HttpSession httpSession;
 
 
-   // for dashboard
+   //! for dashboard
    @RequestMapping(value = "/dashboard")
    public String userDashboard(Model model) {
-
        return "redirect:/user/allContacts";
-
    }
 
+   //!for profile
    @RequestMapping(value = "/profile")
    public String userProfile(Authentication authentication, Model  model) {
 
@@ -59,7 +59,7 @@ public class UserController {
 
 
 
-   //Edit profile 
+   //!Edit profile 
    @RequestMapping(value = "/editProfile")
    public String editProfile(Authentication authentication, Model model){
     String email = getLoggedInUser.getLoggedInUser(authentication);
@@ -73,7 +73,7 @@ public class UserController {
     userData.setAbout(user.getAbout());
     userData.setPassword("Add new Password");
     userData.setPictureFile(null);
-   
+
     model.addAttribute("user", user);
     model.addAttribute("userData", userData);
 
@@ -81,6 +81,7 @@ public class UserController {
    }
 
 
+   //!Update edited value in profile
    @RequestMapping(value="/editUserProfile/{userId}")
    private String editUserProfile(@PathVariable int userId, @ModelAttribute RegisterForm userData){
 
@@ -93,28 +94,19 @@ public class UserController {
     user.setPhoneNumber(userData.getPhoneNumber());
 
     if(userData.getPassword() != null && !userData.getPassword().isEmpty() && !userData.getPassword().equals("Add new Password")){
-      System.out.println("password changed" + userData.getPassword());
       user.setPassword(userData.getPassword());
     }
-    else{
-      System.out.println("password not changed" + userData.getPassword()); 
-
-    }
-
+    
     String image = awsService.uploadImage(userData.getPictureFile());
-    System.out.println(image);
     user.setProfilePic(image);
 
 
 
     Optional<User> tempUser2 =  userService.saveUser(user);
     if(tempUser2.isPresent()){
-      System.out.println("user saved");
       return "redirect:/user/profile";        
     }
     else{
-      System.out.println("user not saved");
-      // session.setAttribute("messageFail","User Regestered Failed! Try again");
       return "redirect:/user/profile"; 
     }
       
@@ -124,18 +116,16 @@ public class UserController {
    }
 
 
-
-
-   //Delete user
+   //!Delete user
 @RequestMapping(value = "/deleteUser/{userId}")
  private String deleteUser(@PathVariable int userId){
    userService.deleteUser(userId);
+   httpSession.invalidate();
    return "redirect:/login";
 }
 
 
-
-   // add contact
+   //! add contact button
    @RequestMapping(value = "/addContact")
    public String addContact(Model model) {
       ContactForm contactForm = new ContactForm();
@@ -144,11 +134,7 @@ public class UserController {
    }
 
 
-
-
-
-
-   // add new contactData
+   //! add new contact to database
    @RequestMapping(value = "/addContactData/{contactId}")
    public String addContactData(@ModelAttribute ContactForm contactForm, @PathVariable int contactId,
          Authentication authentication) {
@@ -159,14 +145,9 @@ public class UserController {
       Contact currContact = contactService.getById(contactId);
    
       if(currContact==null){
-         System.out.println("adding new contact");
-         System.out.println("id is : " + contactForm.getContactId());
+        
          MultipartFile file = contactForm.getPictureFile();
-         System.out.println(file);
-         System.out.println(file.getOriginalFilename());
          String fileName = awsService.uploadImage(file);
-
-         
 
          Contact contact = new Contact();
          contact.setName(contactForm.getName());
@@ -182,18 +163,13 @@ public class UserController {
          Optional<Contact> contact2 = contactService.saveContact(contact);
 
          if (contact2.isPresent()) {
-            return "userData/dashboard";
+            return "redirect:/user/allContacts";
          } else {
-            return "userData/addContact";
+            return "redirect:/user/allContacts";
          }
-
       }
-      else{
-         System.out.println("updatting the contact");
-            System.out.println("id is : " + contactForm.getContactId());
+      else{           
             MultipartFile file = contactForm.getPictureFile();
-            System.out.println(file);
-            System.out.println(file.getOriginalFilename());
             String fileName = awsService.uploadImage(file);
    
             currContact.setName(contactForm.getName());
@@ -209,75 +185,15 @@ public class UserController {
             Optional<Contact> contact2 = contactService.saveContact(currContact);
    
             if (contact2.isPresent()) {
-               return "userData/contacts";
+               return "redirect:/user/allContacts";
             } else {
-               return "userData/addContact";
+               return "redirect:/user/allContacts";
             }
       }
-      // if (contactId != -1) {
-
-         
-      //    System.out.println("updatting the contact");
-      //    System.out.println("id is : " + contactForm.getContactId());
-      //    MultipartFile file = contactForm.getPictureFile();
-      //    System.out.println(file);
-      //    System.out.println(file.getOriginalFilename());
-      //    String fileName = awsService.uploadImage(file);
-
-      //    currContact.setName(contactForm.getName());
-      //    currContact.setEmail(contactForm.getEmail());
-      //    currContact.setPhoneNumber(contactForm.getPhoneNumber());
-      //    currContact.setAddress(contactForm.getAddress());
-      //    currContact.setDescription(contactForm.getDescription());
-      //    currContact.setFavorite(contactForm.isFavorite());
-      //    currContact.setLink(contactForm.getLink());
-      //    currContact.setAdminUser(user);
-      //    currContact.setPicture(fileName);
-
-      //    Optional<Contact> contact2 = contactService.saveContact(currContact);
-
-      //    if (contact2.isPresent()) {
-      //       return "userData/dashboard";
-      //    } else {
-      //       return "userData/addContact";
-      //    }
-
-      // } else {
-      //    // processing image and uplode to aws
-      //    System.out.println("adding new contact");
-      //    System.out.println("id is : " + contactForm.getContactId());
-      //    MultipartFile file = contactForm.getPictureFile();
-      //    System.out.println(file);
-      //    System.out.println(file.getOriginalFilename());
-      //    String fileName = awsService.uploadImage(file);
-
-      //    // processing image and uplode to aws end
-      //    // System.out.println("file name return by aws function : " + fileName);
-
-      //    Contact contact = new Contact();
-      //    contact.setName(contactForm.getName());
-      //    contact.setEmail(contactForm.getEmail());
-      //    contact.setPhoneNumber(contactForm.getPhoneNumber());
-      //    contact.setAddress(contactForm.getAddress());
-      //    contact.setDescription(contactForm.getDescription());
-      //    contact.setFavorite(contactForm.isFavorite());
-      //    contact.setLink(contactForm.getLink());
-      //    contact.setAdminUser(user);
-      //    contact.setPicture(fileName);
-
-      //    Optional<Contact> contact2 = contactService.saveContact(contact);
-
-      //    if (contact2.isPresent()) {
-      //       return "userData/dashboard";
-      //    } else {
-      //       return "userData/addContact";
-      //    }
-
-      // }
-    
 
    }
 
+   //! get all contacts 
    @RequestMapping(value = "/allContacts")
    public String viewAllContacts(Model model, Authentication authentication) {
       String email = getLoggedInUser.getLoggedInUser(authentication);
@@ -285,9 +201,7 @@ public class UserController {
 
       int id = user.getUserId();
       List<Contact> contactList = contactService.getAllContact(id);
-
       model.addAttribute("contactList", contactList);
-
       return "userData/contacts";
    }
 
